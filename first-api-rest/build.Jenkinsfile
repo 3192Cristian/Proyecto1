@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    triggers {
-        gitPush(branches: 'main')
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -15,14 +11,23 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn -f first-api-rest clean install'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'mvn -f first-api-rest test'
             }
         }
     }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+                 }
+        }
 }
