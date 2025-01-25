@@ -5,6 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-id')
         DOCKER_IMAGE = 'first-api-rest-f'
         DOCKER_TAG = 'latest'
+        DOCKERHUB_CREDENTIALS_USR = '9231Cristian'
     }
 
     stages {
@@ -27,7 +28,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    sh "echo ${DOCKERHUB_CREDENTIALS} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
                     sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
                 }
             }
